@@ -8,6 +8,7 @@ const { t } = useI18n()
 
 const cases = ref<PublicCaseDetailVO[]>([])
 const loading = ref(true)
+const needsAuth = ref(false)
 
 const statusLabel: Record<PublicCaseStatus, string> = {
   candidate: 'Candidate',
@@ -23,9 +24,13 @@ onMounted(async () => {
     const res = await publicCaseApi.list({ limit: 50 })
     if (res.data.code === 0 && res.data.data) {
       cases.value = res.data.data
+    } else if (res.data.code === 401 || res.data.code === 403) {
+      needsAuth.value = true
     }
-  } catch {
-    // ignore
+  } catch (e: any) {
+    if (e.response?.status === 401 || e.response?.status === 403) {
+      needsAuth.value = true
+    }
   } finally {
     loading.value = false
   }
@@ -42,6 +47,11 @@ onMounted(async () => {
 
       <div v-if="loading" class="skeleton-grid">
         <div v-for="i in 6" :key="i" class="skeleton-card" />
+      </div>
+
+      <div v-else-if="needsAuth" class="empty-state">
+        <p>{{ t('publicCases.loginRequired') }}</p>
+        <RouterLink to="/login" class="btn-login">{{ t('nav.login') }}</RouterLink>
       </div>
 
       <div v-else-if="cases.length === 0" class="empty-state">
@@ -189,5 +199,17 @@ onMounted(async () => {
 .case-meta {
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
+}
+
+.btn-login {
+  display: inline-flex;
+  margin-top: var(--space-4);
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-inverse);
+  background: var(--color-primary);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
 }
 </style>

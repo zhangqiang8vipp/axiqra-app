@@ -34,13 +34,13 @@ const routes: RouteRecordRaw[] = [
         path: 'public-cases',
         name: 'public-cases',
         component: () => import('@/pages/PublicCasesPage.vue'),
-        meta: { title: '公开案例', requiresAuth: true },
+        meta: { title: '公开案例' },
       },
       {
         path: 'tool-models',
         name: 'tool-models',
         component: () => import('@/pages/ToolModelsPage.vue'),
-        meta: { title: '工具模型', requiresAuth: true },
+        meta: { title: '工具模型' },
       },
       {
         path: 'search',

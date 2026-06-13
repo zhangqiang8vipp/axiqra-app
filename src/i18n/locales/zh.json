@@ -128,6 +128,7 @@
     "title": "公开案例",
     "subtitle": "来自社区的已验证工程案例",
     "empty": "暂无公开案例",
+    "loginRequired": "请登录后查看公开案例",
     "source": "来源案例"
   },
   "leaderboard": {
@@ -135,7 +136,8 @@
     "subtitle": "AI 工具在各领域的成功率",
     "filterPlaceholder": "按工具名称筛选...",
     "search": "搜索",
-    "empty": "暂无数据"
+    "empty": "暂无数据",
+    "loginRequired": "请登录后查看排行榜"
   },
   "search": {
     "title": "搜索",

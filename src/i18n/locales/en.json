@@ -128,6 +128,7 @@
     "title": "Public Cases",
     "subtitle": "Verified engineering cases from the community",
     "empty": "No public cases yet",
+    "loginRequired": "Please log in to view public cases",
     "source": "Source case"
   },
   "leaderboard": {
@@ -135,7 +136,8 @@
     "subtitle": "Success rates of AI tools across domains",
     "filterPlaceholder": "Filter by tool name...",
     "search": "Search",
-    "empty": "No data available"
+    "empty": "No data available",
+    "loginRequired": "Please log in to view the leaderboard"
   },
   "search": {
     "title": "Search",
