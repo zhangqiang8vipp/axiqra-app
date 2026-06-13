@@ -131,6 +131,18 @@
     "loginRequired": "请登录后查看公开案例",
     "source": "来源案例"
   },
+  "publicCasesDetail": {
+    "back": "返回",
+    "loadError": "加载案例详情失败",
+    "loginRequired": "请登录后查看案例详情",
+    "sourceCase": "来源案例",
+    "workspaceId": "工作空间",
+    "authorId": "作者",
+    "createdAt": "创建时间",
+    "updatedAt": "更新时间",
+    "redactionStatus": "脱敏状态",
+    "reviewId": "审核ID"
+  },
   "leaderboard": {
     "title": "工具模型排行榜",
     "subtitle": "AI 工具在各领域的成功率",

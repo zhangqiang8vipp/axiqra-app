@@ -9,7 +9,7 @@ export const toolModelApi = {
     limit?: number
   }) {
     return apiClient.get<ApiResponse<ToolModelLeaderboardVO[]>>(
-      '/api/v1/tool-models/leaderboard',
+      '/v1/tool-models/leaderboard',
       { params },
     )
   },

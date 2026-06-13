@@ -131,6 +131,18 @@
     "loginRequired": "Please log in to view public cases",
     "source": "Source case"
   },
+  "publicCasesDetail": {
+    "back": "Back",
+    "loadError": "Failed to load case details",
+    "loginRequired": "Please log in to view case details",
+    "sourceCase": "Source Case",
+    "workspaceId": "Workspace",
+    "authorId": "Author",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "redactionStatus": "Redaction",
+    "reviewId": "Review ID"
+  },
   "leaderboard": {
     "title": "Tool Model Leaderboard",
     "subtitle": "Success rates of AI tools across domains",

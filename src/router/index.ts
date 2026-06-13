@@ -37,6 +37,12 @@ const routes: RouteRecordRaw[] = [
         meta: { title: '公开案例' },
       },
       {
+        path: 'public-cases/:id',
+        name: 'public-case-detail',
+        component: () => import('@/pages/PublicCaseDetailPage.vue'),
+        meta: { title: '案例详情' },
+      },
+      {
         path: 'tool-models',
         name: 'tool-models',
         component: () => import('@/pages/ToolModelsPage.vue'),

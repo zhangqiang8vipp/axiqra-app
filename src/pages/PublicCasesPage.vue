@@ -59,7 +59,12 @@ onMounted(async () => {
       </div>
 
       <div v-else class="cases-grid">
-        <div v-for="c in cases" :key="c.id" class="case-card">
+        <RouterLink
+          v-for="c in cases"
+          :key="c.id"
+          :to="{ name: 'public-case-detail', params: { id: c.id } }"
+          class="case-card"
+        >
           <div class="case-header">
             <span class="badge" :data-status="c.status">
               {{ statusLabel[c.status] || c.status }}
@@ -75,7 +80,7 @@ onMounted(async () => {
           <div class="case-meta">
             <span>{{ t('publicCases.source') }}: {{ c.sourceCaseId }}</span>
           </div>
-        </div>
+        </RouterLink>
       </div>
     </div>
   </div>
@@ -140,10 +145,12 @@ onMounted(async () => {
 }
 
 .case-card {
+  display: block;
   padding: var(--space-5);
   background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
+  text-decoration: none;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
