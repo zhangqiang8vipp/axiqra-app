@@ -147,7 +147,8 @@
     "found": "找到 {{ count }} 条结果",
     "noResults": "未找到相关结果",
     "seedCreated": "已为此查询创建候选任务",
-    "untitled": "无标题"
+    "untitled": "无标题",
+    "loginRequired": "请登录后搜索"
   },
   "error": {
     "notFound": "页面未找到",

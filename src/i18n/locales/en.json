@@ -147,7 +147,8 @@
     "found": "{{ count }} results found",
     "noResults": "No results found",
     "seedCreated": "A candidate task has been created for this query",
-    "untitled": "Untitled"
+    "untitled": "Untitled",
+    "loginRequired": "Please log in to search"
   },
   "error": {
     "notFound": "Page not found",

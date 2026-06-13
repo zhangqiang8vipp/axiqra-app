@@ -12,6 +12,7 @@ const router = useRouter()
 const query = ref((route.query.q as string) || '')
 const results = ref<SearchResponseVO | null>(null)
 const loading = ref(false)
+const needsAuth = ref(false)
 
 onMounted(() => {
   if (query.value) doSearch()
@@ -19,19 +20,25 @@ onMounted(() => {
 
 watch(() => route.query.q, (q) => {
   query.value = (q as string) || ''
+  needsAuth.value = false
   if (query.value) doSearch()
 })
 
 async function doSearch() {
   if (!query.value.trim()) return
   loading.value = true
+  needsAuth.value = false
   try {
     const res = await searchApi.search({ query: query.value.trim(), limit: 20 })
     if (res.data.code === 0 && res.data.data) {
       results.value = res.data.data
+    } else if (res.data.code === 401 || res.data.code === 403) {
+      needsAuth.value = true
     }
-  } catch {
-    results.value = null
+  } catch (e: any) {
+    if (e.response?.status === 401 || e.response?.status === 403) {
+      needsAuth.value = true
+    }
   } finally {
     loading.value = false
   }
@@ -72,6 +79,11 @@ function formatScore(score: number | null) {
 
       <div v-if="loading" class="skeleton-list">
         <div v-for="i in 5" :key="i" class="skeleton-card" />
+      </div>
+
+      <div v-else-if="needsAuth" class="empty-state">
+        <p>{{ t('search.loginRequired') }}</p>
+        <RouterLink to="/login" class="btn-login">{{ t('nav.login') }}</RouterLink>
       </div>
 
       <div v-else-if="results">
@@ -300,5 +312,17 @@ function formatScore(score: number | null) {
   font-size: var(--text-xs);
   color: var(--color-text-tertiary);
   font-style: italic;
+}
+
+.btn-login {
+  display: inline-flex;
+  margin-top: var(--space-4);
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-inverse);
+  background: var(--color-primary);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
 }
 </style>
