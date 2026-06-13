@@ -1,41 +1,42 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import type { CurrentUser } from '@/types'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string | null>(localStorage.getItem('axiqra_token'))
-  const user = ref<UserInfo | null>(null)
+  const user = ref<CurrentUser | null>(null)
+  const loading = ref(false)
 
-  const isLoggedIn = () => !!token.value
+  const isLoggedIn = computed(() => !!token.value)
+  const displayName = computed(() =>
+    user.value?.nickname || user.value?.username || '',
+  )
+  const avatarUrl = computed(() => user.value?.avatar || null)
 
-  const setToken = (newToken: string) => {
+  function setToken(newToken: string) {
     token.value = newToken
     localStorage.setItem('axiqra_token', newToken)
   }
 
-  const setUser = (userInfo: UserInfo) => {
+  function setUser(userInfo: CurrentUser) {
     user.value = userInfo
   }
 
-  const logout = () => {
+  function clearAuth() {
     token.value = null
     user.value = null
     localStorage.removeItem('axiqra_token')
   }
 
-  return { token, user, isLoggedIn, setToken, setUser, logout }
+  return {
+    token,
+    user,
+    loading,
+    isLoggedIn,
+    displayName,
+    avatarUrl,
+    setToken,
+    setUser,
+    clearAuth,
+  }
 })
-
-export interface UserInfo {
-  id: string
-  username: string
-  email: string
-  avatar?: string
-  scopes: string[]
-  workspaces: Workspace[]
-}
-
-export interface Workspace {
-  id: string
-  name: string
-  type: 'personal' | 'team' | 'enterprise'
-}
