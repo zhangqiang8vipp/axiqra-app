@@ -158,6 +158,8 @@
     "prompt": "Enter a query above to search engineering traces",
     "found": "{{ count }} results found",
     "noResults": "No results found",
+    "noResultsGuest": "No results found for public content",
+    "noResultsGuestHint": "Log in to search across your workspace and more results",
     "seedCreated": "A candidate task has been created for this query",
     "untitled": "Untitled",
     "loginRequired": "Please log in to search"

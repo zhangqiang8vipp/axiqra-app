@@ -8,7 +8,6 @@ const { t } = useI18n()
 
 const tools = ref<ToolModelLeaderboardVO[]>([])
 const loading = ref(true)
-const needsAuth = ref(false)
 const scopeType = ref('global')
 const toolNameFilter = ref('')
 
@@ -22,7 +21,6 @@ onMounted(() => load())
 
 async function load() {
   loading.value = true
-  needsAuth.value = false
   try {
     const res = await toolModelApi.getLeaderboard({
       scopeType: scopeType.value,
@@ -31,13 +29,9 @@ async function load() {
     })
     if (res.data.code === 0 && res.data.data) {
       tools.value = res.data.data
-    } else if (res.data.code === 401 || res.data.code === 403) {
-      needsAuth.value = true
     }
-  } catch (e: any) {
-    if (e.response?.status === 401 || e.response?.status === 403) {
-      needsAuth.value = true
-    }
+  } catch {
+    // error: tools stays empty, empty state shown below
   } finally {
     loading.value = false
   }
@@ -79,11 +73,6 @@ function rankColor(rank: number) {
 
       <div v-if="loading" class="skeleton-table">
         <div v-for="i in 10" :key="i" class="skeleton-row" />
-      </div>
-
-      <div v-else-if="needsAuth" class="empty-state">
-        <p>{{ t('leaderboard.loginRequired') }}</p>
-        <RouterLink to="/login" class="btn-login">{{ t('nav.login') }}</RouterLink>
       </div>
 
       <div v-else-if="tools.length === 0" class="empty-state">
@@ -329,17 +318,5 @@ function rankColor(rank: number) {
   color: var(--color-text-tertiary);
   font-size: var(--text-xs);
   text-align: right;
-}
-
-.btn-login {
-  display: inline-flex;
-  margin-top: var(--space-4);
-  padding: var(--space-2) var(--space-5);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-text-inverse);
-  background: var(--color-primary);
-  border-radius: var(--radius-lg);
-  text-decoration: none;
 }
 </style>

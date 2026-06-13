@@ -3,11 +3,13 @@ import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { searchApi } from '@/api/search'
-import type { SearchResponseVO, SearchResultItemVO } from '@/types'
+import { useAuthStore } from '@/stores/auth'
+import type { SearchResponseVO } from '@/types'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
+const authStore = useAuthStore()
 
 const query = ref((route.query.q as string) || '')
 const results = ref<SearchResponseVO | null>(null)
@@ -93,6 +95,9 @@ function formatScore(score: number | null) {
 
         <div v-if="results.empty" class="empty-state">
           <p>{{ results.emptyReason || t('search.noResults') }}</p>
+          <p v-if="!authStore.isLoggedIn" class="guest-hint">
+            {{ t('search.noResultsGuestHint') }}
+          </p>
           <p v-if="results.candidateSeedCreated" class="seed-hint">
             {{ t('search.seedCreated') }}
           </p>
@@ -234,6 +239,12 @@ function formatScore(score: number | null) {
   margin-top: var(--space-2);
   font-size: var(--text-sm);
   color: var(--color-success);
+}
+
+.guest-hint {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
 }
 
 .results-list {
