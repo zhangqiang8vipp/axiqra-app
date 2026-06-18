@@ -1,18 +1,50 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { RouterView } from 'vue-router'
+import { RouterView, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useThemeStore } from '@/stores/theme'
+import { useAuthStore } from '@/stores/auth'
 import { setLocale } from '@/i18n'
+import { authApi } from '@/api/auth'
 
 const { t, locale } = useI18n()
 const themeStore = useThemeStore()
+const authStore = useAuthStore()
+const router = useRouter()
 
 const isDark = computed(() => themeStore.theme === 'dark')
+const showUserMenu = ref(false)
 
 function toggleLocale() {
   setLocale(locale.value === 'en' ? 'zh' : 'en')
 }
+
+async function handleLogout() {
+  try {
+    await authApi.logout()
+  } catch {
+    // ignore
+  } finally {
+    authStore.clearAuth()
+    router.push('/')
+  }
+}
+
+function closeMenu() {
+  showUserMenu.value = false
+}
+
+function handleClickOutside() {
+  showUserMenu.value = false
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 
 // Starfield canvas — lives in layout so it covers the whole viewport
 const canvasRef = ref<HTMLCanvasElement | null>(null)
@@ -219,9 +251,38 @@ onUnmounted(() => {
             {{ locale === 'en' ? '中文' : 'EN' }}
           </button>
 
-          <!-- Auth -->
-          <a href="/login" class="btn btn-ghost">{{ t('nav.login') }}</a>
-          <a href="/register" class="btn btn-primary">{{ t('nav.register') }}</a>
+        <!-- Auth — logged in: avatar + dropdown -->
+          <template v-if="authStore.isLoggedIn">
+            <div class="user-menu-wrap">
+              <button class="user-avatar-btn" @click="showUserMenu = !showUserMenu">
+                <div class="user-avatar">
+                  {{ authStore.displayName.charAt(0).toUpperCase() }}
+                </div>
+              </button>
+              <div v-if="showUserMenu" class="user-dropdown" @click.stop>
+                <div class="dropdown-header">
+                  <span class="dropdown-name">{{ authStore.displayName }}</span>
+                  <span class="dropdown-email">{{ authStore.user?.email }}</span>
+                </div>
+                <div class="dropdown-divider" />
+                <RouterLink to="/dashboard" class="dropdown-item" @click="closeMenu">
+                  {{ t('nav.dashboard') }}
+                </RouterLink>
+                <RouterLink to="/workspaces" class="dropdown-item" @click="closeMenu">
+                  {{ t('workspace.title') }}
+                </RouterLink>
+                <div class="dropdown-divider" />
+                <button class="dropdown-item dropdown-item--danger" @click="handleLogout">
+                  {{ t('nav.logout') }}
+                </button>
+              </div>
+            </div>
+          </template>
+          <!-- Auth — guest: Login + Register -->
+          <template v-else>
+            <a href="/login" class="btn btn-ghost">{{ t('nav.login') }}</a>
+            <a href="/register" class="btn btn-primary">{{ t('nav.register') }}</a>
+          </template>
         </div>
       </div>
     </header>
@@ -402,6 +463,96 @@ onUnmounted(() => {
   background: var(--color-primary-hover);
   text-decoration: none;
   box-shadow: var(--shadow-glow);
+}
+
+/* User menu */
+.user-menu-wrap {
+  position: relative;
+}
+
+.user-avatar-btn {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-fast);
+}
+
+.user-avatar-btn:hover .user-avatar {
+  opacity: 0.85;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  min-width: 200px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  z-index: 100;
+}
+
+.dropdown-header {
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.dropdown-email {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--color-border);
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  text-align: left;
+  background: transparent;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.dropdown-item--danger:hover {
+  color: var(--color-error);
 }
 
 .main {

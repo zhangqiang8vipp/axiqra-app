@@ -5,6 +5,7 @@
   },
   "nav": {
     "home": "Home",
+    "dashboard": "Dashboard",
     "publicCases": "Public Cases",
     "leaderboard": "Leaderboard",
     "login": "Login",
@@ -61,5 +62,119 @@
   },
   "footer": {
     "copyright": "© 2025 Axiqra. All rights reserved."
+  },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to your Axiqra account",
+    "registerTitle": "Create account",
+    "registerSubtitle": "Start your engineering memory journey",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm Password",
+    "confirmPlaceholder": "Repeat your password",
+    "passwordHint": "At least 8 characters",
+    "passwordMismatch": "Passwords do not match",
+    "loginBtn": "Sign in",
+    "registerBtn": "Create account",
+    "loggingIn": "Signing in...",
+    "registering": "Creating account...",
+    "loginFailed": "Invalid username or password",
+    "registerFailed": "Registration failed. Please try again.",
+    "networkError": "Network error. Please check your connection.",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "registerNow": "Sign up free",
+    "loginNow": "Sign in",
+    "logout": "Sign out"
+  },
+  "dashboard": {
+    "welcome": "Welcome, {{ name }}",
+    "subtitle": "Your engineering memory hub",
+    "quickActions": "Quick Actions",
+    "browseCases": "Browse Cases",
+    "myWorkspaces": "My Workspaces",
+    "leaderboard": "Leaderboard",
+    "recentWorkspaces": "Recent Workspaces",
+    "viewAll": "View all",
+    "noWorkspaces": "No workspaces yet",
+    "createFirst": "Create your first workspace"
+  },
+  "workspace": {
+    "title": "Workspaces",
+    "subtitle": "Manage your workspaces and teams",
+    "create": "Create Workspace",
+    "createNew": "Create New Workspace",
+    "name": "Workspace Name",
+    "namePlaceholder": "e.g. My Team",
+    "type": "Type",
+    "type.personal": "Personal",
+    "type.team": "Team",
+    "type.enterprise": "Enterprise",
+    "members": "members",
+    "member": "member",
+    "created": "Created",
+    "back": "Back to Workspaces",
+    "empty": "No workspaces found",
+    "createFirst": "Create your first workspace",
+    "createFailed": "Failed to create workspace",
+    "confirmRemove": "Remove this member?",
+    "remove": "Remove"
+  },
+  "publicCases": {
+    "title": "Public Cases",
+    "subtitle": "Verified engineering cases from the community",
+    "empty": "No public cases yet",
+    "loginRequired": "Please log in to view public cases",
+    "source": "Source case"
+  },
+  "publicCasesDetail": {
+    "back": "Back",
+    "loadError": "Failed to load case details",
+    "loginRequired": "Please log in to view case details",
+    "sourceCase": "Source Case",
+    "workspaceId": "Workspace",
+    "authorId": "Author",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "redactionStatus": "Redaction",
+    "reviewId": "Review ID"
+  },
+  "leaderboard": {
+    "title": "Tool Model Leaderboard",
+    "subtitle": "Success rates of AI tools across domains",
+    "filterPlaceholder": "Filter by tool name...",
+    "search": "Search",
+    "empty": "No data available",
+    "loginRequired": "Please log in to view the leaderboard"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search traces, solutions, cases...",
+    "btn": "Search",
+    "prompt": "Enter a query above to search engineering traces",
+    "found": "{{ count }} results found",
+    "noResults": "No results found",
+    "noResultsGuest": "No results found for public content",
+    "noResultsGuestHint": "Log in to search across your workspace and more results",
+    "seedCreated": "A candidate task has been created for this query",
+    "untitled": "Untitled",
+    "loginRequired": "Please log in to search"
+  },
+  "error": {
+    "notFound": "Page not found",
+    "notFoundDesc": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go to homepage"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit"
   }
 }

@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
+const router = useRouter()
 const { t } = useI18n()
 const searchQuery = ref('')
 const inputRef = ref<HTMLInputElement | null>(null)
 
 function handleSearch() {
   if (!searchQuery.value.trim()) return
-  console.log('Search:', searchQuery.value)
+  router.push({ name: 'search', query: { q: searchQuery.value } })
 }
 
 function handleKeydown(e: KeyboardEvent) {
